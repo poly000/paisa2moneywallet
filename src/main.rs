@@ -1,7 +1,7 @@
 use anyhow::Result;
 use std::{collections::BTreeMap, path::Path};
 
-use paisa_to_moneywallet::{money_wallet, paisa::PaisaJson};
+use paisa2moneywallet::{money_wallet, paisa::PaisaJson};
 
 fn main() -> Result<()> {
     let path = std::env::args().nth(1).unwrap();

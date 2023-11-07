@@ -1,5 +1,5 @@
 [package]
-name = "paisa_to_moneywallet"
+name = "paisa2moneywallet"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"

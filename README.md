@@ -10,9 +10,8 @@ then, run paisa2moneywallet, with Paisa export json (v4.8.1+ ~ ?) path as first 
 
 output will be MoneyWallet compatible CSV
 
-## Tips
+## Limitations
 
-for now, you need correspond accounts/categories manually
-
-I may or may not support this feature later
+- [ ] correspond accounts/categories
+- [ ] customizable currency type
 

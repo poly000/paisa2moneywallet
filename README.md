@@ -10,6 +10,8 @@ then, run paisa2moneywallet, with Paisa export json (v4.8.1+ ~ ?) path as first 
 
 output CSV path as second parameter
 
+note: `accounts[].amount` means the initial funds
+
 ## Limitations
 
 - [ ] correspond accounts/categories

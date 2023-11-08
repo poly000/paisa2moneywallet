@@ -21,11 +21,6 @@ jobs:
             os: macos-latest
             bin: paisa2moneywallet
 
-          - platform: android_bionic-aarch64
-            target: aarch64-linux-android
-            os: ubuntu-latest
-            bin: paisa2moneywallet
-
           - platform: linux_glibc-x86_64
             target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
@@ -78,7 +73,7 @@ jobs:
         shell: bash
         run: |
           mv target/${{ matrix.target }}/release/${{ matrix.bin }} .          
-          tar -cvf ${{ matrix.target }}.tar LICENSE ${{ matrix.bin }}
+          tar -cvf ${{ matrix.target }}.tar LICENSE ${{ matrix.bin }} README.md
         
       - name: Declare some variables # https://stackoverflow.com/a/61699863
         id: vars

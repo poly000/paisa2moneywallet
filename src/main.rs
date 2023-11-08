@@ -41,7 +41,7 @@ fn main() -> Result<()> {
         };
         let money = format!("{sign}{}", transaction.currency);
 
-        let description = format!("{}", transaction.description.unwrap_or_default());
+        let description = format!("{}", transaction.name);
 
         let money_wallet = money_wallet::MoneyWallet {
             wallet,

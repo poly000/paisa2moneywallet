@@ -4,13 +4,13 @@ use std::{collections::BTreeMap, path::Path};
 use paisa2moneywallet::{money_wallet, paisa::PaisaJson};
 
 fn main() -> Result<()> {
-    let path = std::env::args().nth(1).unwrap();
-    let paisa_data = read_paisa(path)?;
+    let input = std::env::args().nth(1).unwrap();
+    let paisa_data = read_paisa(input)?;
+    let output = std::env::args().nth(2).unwrap();
 
-    let stdout_writer = std::io::stdout().lock();
     let mut csv_writer = csv::WriterBuilder::new()
         .quote_style(csv::QuoteStyle::Always)
-        .from_writer(stdout_writer);
+        .from_path(output)?;
 
     let account_map = BTreeMap::from_iter(
         paisa_data

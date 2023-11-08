@@ -8,7 +8,7 @@ add quotes to every currency field.
 
 then, run paisa2moneywallet, with Paisa export json (v4.8.1+ ~ ?) path as first parameter
 
-output will be MoneyWallet compatible CSV
+output CSV path as second parameter
 
 ## Limitations
 

@@ -1,0 +1,89 @@
+# Origin config by @Kilerd
+
+name: Build Canary Version
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Release on ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        platform: [macos-x86_64, linux_glibc-x86_64, linux_musl-x86_64, linux_musl-i686,  windows-i686, windows-x86_64]
+        include:
+        
+          - platform: macos-x86_64
+            target: x86_64-apple-darwin
+            os: macos-latest
+            bin: paisa2moneywallet
+
+          - platform: linux_glibc-x86_64
+            target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            bin: paisa2moneywallet
+            
+          - platform: linux_musl-x86_64
+            target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            bin: paisa2moneywallet
+        
+          - platform: linux_musl-i686
+            target: i686-unknown-linux-musl
+            os: ubuntu-latest
+            bin: paisa2moneywallet
+            
+          - platform: windows-i686
+            target: i686-pc-windows-msvc
+            os: windows-latest
+            bin: paisa2moneywallet.exe
+            
+          - platform: windows-x86_64
+            target: x86_64-pc-windows-msvc
+            os: windows-latest
+            bin: paisa2moneywallet.exe
+            
+    steps:
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          target: ${{ matrix.target }}
+          toolchain: nightly
+          override: true
+
+      - name: Checkout code
+        uses: actions/checkout@v1
+        
+      - name: Prepare target
+        shell: bash
+        run: |
+          rustup target add ${{ matrix.target }}
+
+      - name: Run code build
+        uses: actions-rs/cargo@v1
+        with:
+          toolchain: nightly
+          command: build
+          args: --release --target ${{ matrix.target }}
+
+      - name: Prepare assets
+        shell: bash
+        run: |
+          mv target/${{ matrix.target }}/release/${{ matrix.bin }} .          
+          tar -cvf ${{ matrix.target }}.tar LICENSE ${{ matrix.bin }} README.md
+        
+      - name: Declare some variables # https://stackoverflow.com/a/61699863
+        id: vars
+        shell: bash
+        run: |
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Pre-Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ matrix.target }}.tar
+          tag_name: 0.1.0-g${{ steps.vars.outputs.sha_short }}
+          prerelease: true

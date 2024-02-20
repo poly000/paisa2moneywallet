@@ -14,6 +14,6 @@ note: `accounts[].amount` means the initial funds
 
 ## Limitations
 
-- [ ] correspond accounts/categories
+- [x] correspond accounts/categories
 - [ ] customizable currency type
 
